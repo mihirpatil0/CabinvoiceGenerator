@@ -1,5 +1,7 @@
 package com.bridgelabz.cabinvoicegenerator;
 
+import java.util.HashMap;
+
 /*******************************************************
  * @author mihir
  * @since 27-July-2021
@@ -10,6 +12,7 @@ package com.bridgelabz.cabinvoicegenerator;
 
 public class CabInvoiceGenerator
 {
+    public HashMap<Integer,Ride[]> rideRepository = new HashMap<>();
     private static final double FARE_PER_KM = 10;
     private static final double FARE_PER_MINUTE = 1;
     private static final double MINIMUM_FARE = 5;
@@ -36,18 +39,20 @@ public class CabInvoiceGenerator
      *
      * Description : Calculating total fare based on rides.
      *
+     * @param userId
      * @param rides
      * @return
      *
      * Modificaation : 27-July-2021.
      */
-    public double calculateTotalFare(Ride[] rides)
+    public InvoiceSummary calculateTotalFare(int userId,Ride[] rides)
     {
         double totalFare = 0;
         for (Ride ride : rides)
         {
             totalFare+=getfare(ride.distance, ride.time);
         }
-        return totalFare;
+        rideRepository.put(userId,rides);
+        return  new InvoiceSummary(userId,rides.length, totalFare);
     }
 }
