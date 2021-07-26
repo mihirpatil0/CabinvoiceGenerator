@@ -1,6 +1,7 @@
 package com.bridgelabz.cabinvoicegeneratorTest;
 
 import com.bridgelabz.cabinvoicegenerator.CabInvoiceGenerator;
+import com.bridgelabz.cabinvoicegenerator.Ride;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +33,14 @@ public class CabInvoiceGeneratorTest
         double time = 2;
         double totalfare =  cabInvoiceGenerator.getfare(distance,time);
         Assertions.assertEquals(5, totalfare,0.0);
+    }
+
+    @Test
+    public void givenMultipleRides_ShouldReturnTotalFare()
+    {
+        CabInvoiceGenerator cabInvoiceGenerator =new CabInvoiceGenerator();
+        Ride[] rides = { new Ride(5.0,2),new Ride(0.1,2)};
+        double totalfare =  cabInvoiceGenerator.calculateTotalFare(rides);
+        Assertions.assertEquals(57, totalfare,0.0);
     }
 }
